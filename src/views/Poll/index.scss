@@ -1,0 +1,84 @@
+.page-container {
+  .header-container {
+    // background: #fff;
+    margin-bottom: 1em;
+
+    .breadcrumb {
+      background: transparent;
+      margin-bottom: -1em;
+    }
+
+    .buttons-container {
+      margin-top: 0.5em;
+
+      button {
+        width: 100px;
+        margin-left: 1em;
+      }
+    }
+
+    .title {
+      font-size: 2em;
+      font-weight: bold;
+
+      span {
+        display: inline-block;
+        max-width: 200px;
+        font-size: 0.75em;
+        color: #555;
+        font-weight: normal;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        line-height: 20px;
+        margin: 0;
+      }
+    }
+  }
+
+  .body-container {
+
+    .photo {
+      max-width: 250px !important;
+  
+      img {
+        width: 100%;
+      }
+    }
+    
+    .form-container {
+      background: #fff;
+      padding: 1em;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px #e3e9f3;       
+
+      .vue-tags-input {
+        max-width: unset;
+      }
+
+      table {
+        font-size: 0.9em !important;
+        border-color: #eee !important;
+
+        th, td{
+          border-color: #eee !important;
+        }
+      }
+
+      .action-buttons {
+        a {
+          margin-right: 1em;
+        }
+      }
+
+      .label {
+        margin-bottom: 0.5em;
+      }
+    }
+    
+  }  
+}
+
+.table-img {
+  width: 40px;
+}

@@ -1,0 +1,67 @@
+.page-container {
+  .header-container {
+    // background: #fff;
+    margin-bottom: 0.5em;
+
+    .breadcrumb {
+      background: transparent;
+      margin-bottom: -1em;
+    }
+
+    .title {
+      font-size: 2em;
+      font-weight: bold;
+
+      span {
+        font-size: 0.75em;
+        color: #555;
+        font-weight: normal;
+      }
+    }
+
+    .info-container {
+      margin-top: 0.5em;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+
+      input,
+      a {
+        margin-right: 1em;
+      }
+    }
+  }
+
+  .body-container {
+    .form-container {
+      background: #fff;
+      padding: 1em;
+      border-radius: 2px;
+      box-shadow: 0 2px 4px #e3e9f3;
+
+      .vue-tags-input {
+        max-width: unset;
+      }
+
+      table {
+        font-size: 0.9em !important;
+        border-color: #eee !important;
+
+        th,
+        td {
+          border-color: #eee !important;
+        }
+      }
+
+      .action-buttons {
+        a {
+          margin-right: 1em;
+        }
+      }
+
+      .label {
+        margin-bottom: 0.5em;
+      }
+    }
+  }
+}
