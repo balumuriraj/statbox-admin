@@ -1,0 +1,19 @@
+.page-container {
+  margin: 2em 0;
+
+  .block {
+    margin-bottom: 2em;
+
+    .title {
+      opacity: 0.5;
+      font-size: 1.5em;
+      font-weight: bold;
+    }
+
+    a {
+      font-size: 1em;
+      font-weight: bold;
+      text-transform: uppercase;
+    }
+  }
+}

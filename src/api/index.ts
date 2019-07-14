@@ -1,72 +1,95 @@
-import axios from 'axios';
+import axios, { AxiosRequestConfig } from 'axios';
 import { baseUrl } from './config';
 
 export * from '@/api/movie';
 export * from '@/api/role';
 export * from '@/api/celeb';
 export * from '@/api/poll';
+export * from '@/api/user';
+import { getToken } from '@/support/firebaseUtils';
 
 export async function getDBMetas() {
-  const response = await axios({
+  return await request({
+    url: `admin/database/metas`,
     method: 'GET',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/database/metas`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
   });
-
-  return response.data;
 }
 
 export async function createDatabase(years: string[], months: string[]) {
-  await axios({
+  await request({
+    url: `admin/database/create?years=${years}&months=${months}`,
     method: 'GET',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/database/create?years=${years}&months=${months}`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
+  });
+}
+
+export async function createMovieFromUrl(url: string) {
+  await request({
+    url: `admin/database/create/movie?url=${url}`,
+    method: 'GET',
+    includeTimeout: true,
   });
 }
 
 export async function addImages(metaId: number) {
-  await axios({
+  await request({
+    url: `admin/firebase/add?metaId=${metaId}`,
     method: 'GET',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/firebase/add?metaId=${metaId}`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
   });
 }
 
 export async function deleteImages(metaId: number) {
-  await axios({
+  await request({
+    url: `admin/firebase/delete?metaId=${metaId}`,
     method: 'DELETE',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/firebase/delete?metaId=${metaId}`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
   });
 }
 
 export async function addSearch(metaId: number) {
-  await axios({
+  await request({
+    url: `admin/algolia/add?metaId=${metaId}`,
     method: 'GET',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/algolia/add?metaId=${metaId}`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
   });
 }
 
 export async function updateSearch(metaId: number) {
-  await axios({
+  await request({
+    url: `admin/algolia/update?metaId=${metaId}`,
     method: 'GET',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/algolia/update?metaId=${metaId}`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
   });
 }
 
 export async function deleteSearch(metaId: number) {
-  await axios({
+  await request({
+    url: `admin/algolia/delete?metaId=${metaId}`,
     method: 'DELETE',
-    timeout: 60 * 4 * 60 * 1000, // Let's say you want to wait at least 4 hrs
-    url: `${baseUrl}/api/rest/admin/algolia/delete?metaId=${metaId}`,
-    // headers: { Authorization: `${idToken}` },
+    includeTimeout: true,
   });
+}
+
+export async function request(params: {
+  url: string, method: 'GET' | 'POST' | 'PUT' | 'DELETE', includeTimeout?: boolean, data?: any, token?: string,
+}) {
+  const token = params.token || await getToken();
+  const options: AxiosRequestConfig = {
+    method: params.method,
+    url: `${baseUrl}/api/rest/${params.url}`,
+    headers: { Authorization: `${token}` },
+  };
+
+  if (params.data) {
+    options.data = params.data;
+  }
+
+  if (params.includeTimeout) {
+    options.timeout = 60 * 10 * 60 * 1000; // Let's say you want to wait at least 10 hrs
+  }
+
+  const response = await axios(options);
+  return response && response.data;
 }

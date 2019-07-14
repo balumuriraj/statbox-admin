@@ -12,8 +12,7 @@ export default class Storage extends Vue {
   public metas: any[] = [];
   public fields = [
     'id',
-    'years',
-    'months',
+    'details',
     'moviesCount',
     'celebsCount',
     'type',

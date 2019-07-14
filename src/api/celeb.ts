@@ -1,64 +1,47 @@
-import axios from 'axios';
-import { baseUrl } from './config';
+import { request } from '.';
 
 export async function getCelebsCount(): Promise<number> {
-  const response = await axios({
+  const response = await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/celebs/count`,
-    // headers: { Authorization: `${idToken}` },
+    url: `celebs/count`,
   });
 
-  return response.data.count;
+  return response.count;
 }
 
 export async function getCelebs(limit: number, skip: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/celebs?limit=${limit}&skip=${skip}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `celebs?limit=${limit}&skip=${skip}`,
   });
-
-  return response.data;
 }
 
 export async function getCelebById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/celeb/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `celeb/${id}`,
   });
-
-  return response.data;
 }
 
 export async function deleteCelebById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'DELETE',
-    url: `${baseUrl}/api/rest/admin/celeb/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `admin/celeb/${id}`,
   });
-
-  return response.data;
 }
 
 export async function saveOrUpdateCeleb(celeb: any): Promise<any> {
   if (celeb.id) {
-    const res = await axios({
+    return await request({
       method: 'PUT',
-      url: `${baseUrl}/api/rest/admin/celeb/${celeb.id}`,
+      url: `admin/celeb/${celeb.id}`,
       data: celeb,
-      // headers: { Authorization: `${idToken}` },
     });
-
-    return res.data;
   }
 
-  const response = await axios({
+  return await request({
     method: 'POST',
-    url: `${baseUrl}/api/rest/admin/celeb`,
+    url: `admin/celeb`,
     data: celeb,
-    // headers: { Authorization: `${idToken}` },
   });
-
-  return response.data;
 }

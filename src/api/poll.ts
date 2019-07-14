@@ -1,64 +1,48 @@
-import axios from 'axios';
-import { baseUrl } from './config';
+import { request } from '.';
 
 export async function getPollsCount(): Promise<number> {
-  const response = await axios({
+  const response = await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/polls/count`,
-    // headers: { Authorization: `${idToken}` },
+    url: `polls/count`,
+
   });
 
-  return response.data.count;
+  return response.count;
 }
 
 export async function getPolls(limit: number, skip: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/polls?limit=${limit}&skip=${skip}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `polls?limit=${limit}&skip=${skip}`,
   });
-
-  return response.data;
 }
 
 export async function getPollById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/poll/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `poll/${id}`,
   });
-
-  return response.data;
 }
 
 export async function deletePollById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'DELETE',
-    url: `${baseUrl}/api/rest/admin/poll/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `admin/poll/${id}`,
   });
-
-  return response.data;
 }
 
 export async function saveOrUpdatePoll(poll: any): Promise<any> {
   if (poll.id) {
-    const res = await axios({
+    return await request({
       method: 'PUT',
-      url: `${baseUrl}/api/rest/admin/poll/${poll.id}`,
+      url: `admin/poll/${poll.id}`,
       data: poll,
-      // headers: { Authorization: `${idToken}` },
     });
-
-    return res.data;
   }
 
-  const response = await axios({
+  return await request({
     method: 'POST',
-    url: `${baseUrl}/api/rest/admin/poll`,
+    url: `admin/poll`,
     data: poll,
-    // headers: { Authorization: `${idToken}` },
   });
-
-  return response.data;
 }

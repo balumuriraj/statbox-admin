@@ -5,7 +5,7 @@ import {
   deletePollById,
   saveOrUpdatePoll,
 } from '@/api';
-import { uploadImage, deleteImage } from '@/support/storageUtils';
+import { uploadImage, deleteImage } from '@/support/firebaseUtils';
 
 @Component({
   components: {

@@ -1,7 +1,7 @@
 <template>
   <div id="app" class="h-100">
     <!-- <Menu /> -->
-    <b-container fluid class="container-height">
+    <b-container fluid class="container-height" v-if="isUserLoggedIn">
       <b-row class="h-100">
         <b-col class="h-100 side-menu" v-show="showMenu">
           <div class="logo">
@@ -30,19 +30,23 @@
               <div class="menu-icon" @click="showMenu = !showMenu"><font-awesome-icon icon="bars" /></div>
             </b-col>
             <b-col align="right">
-              <b-btn size="sm" variant="outline-primary"><font-awesome-icon icon="sign-out-alt" /> Logout</b-btn>
+              <b-btn size="sm" variant="outline-primary" @click="logout()"><font-awesome-icon icon="sign-out-alt" /> Logout</b-btn>
             </b-col>
           </b-row>
           <router-view />
         </b-col>
       </b-row>
     </b-container>
+    <div v-else class="h-100">
+      <router-view />
+    </div>
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import Menu from "@/components/common/Menu";
+import { logoutFirebaseUser } from './support/firebaseUtils';
 
 @Component({
   components: {
@@ -51,6 +55,14 @@ import Menu from "@/components/common/Menu";
 })
 export default class App extends Vue {
   public showMenu = false;
+
+  get isUserLoggedIn() {
+    return this.$store.state.isLoggedIn;
+  }
+
+  public async logout() {
+    await logoutFirebaseUser();
+  }
 
   private mounted() {
     const width = document.body.clientWidth;
@@ -169,21 +181,4 @@ body {
     border-radius: 4px !important;
   }  
 }
-
-// @media (min-width: 950px) { 
-//   .side-menu {
-//     display: block;
-//   }
-  
-//   .main-container {
-//     overflow: auto;
-//     background: #FAFAFB;
-
-//     .top-menu {
-//       .menu-icon {
-//         display: none;
-//       }
-//     }
-//   }
-// }
 </style>

@@ -1,54 +1,39 @@
-import axios from 'axios';
-import { baseUrl } from './config';
+import { request } from '.';
+
 
 export async function saveOrUpdateRole(role: any): Promise<any> {
   if (role.id) {
-    const res = await axios({
+    return await request({
       method: 'PUT',
-      url: `${baseUrl}/api/rest/admin/role/${role.id}`,
+      url: `admin/role/${role.id}`,
       data: role,
-      // headers: { Authorization: `${idToken}` },
     });
-
-    return res.data;
   }
 
-  const response = await axios({
+  return await request({
     method: 'POST',
-    url: `${baseUrl}/api/rest/admin/role`,
+    url: `admin/role`,
     data: role,
-    // headers: { Authorization: `${idToken}` },
   });
-
-  return response.data;
 }
 
 export async function deleteRoleById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'DELETE',
-    url: `${baseUrl}/api/rest/admin/role/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `admin/role/${id}`,
   });
-
-  return response.data;
 }
 
 export async function getRolesByMovieId(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/roles/movie/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `roles/movie/${id}`,
   });
-
-  return response.data;
 }
 
 export async function getRolesByCelebId(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/roles/celeb/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `roles/celeb/${id}`,
   });
-
-  return response.data;
 }

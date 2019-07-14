@@ -16,17 +16,27 @@
     <div class="body-container">
       <b-container fluid>
         <div class="form-container">
-          <b-table hover :items="metas" :fields="fields" :busy.sync="isBusy" bordered class="table">
-            <template slot="years" slot-scope="data">
-              <p v-if="data.item.years && data.item.years.length > 1">{{data.item.years[0]}}-{{data.item.years[data.item.years.length - 1]}}</p>
+          <b-table responsive hover :items="metas" :fields="fields" :busy.sync="isBusy" bordered class="table">
+            <template slot="details" slot-scope="data">
+              <b-link
+                size="sm"
+                @click="data.toggleDetails"
+                class="mr-2"
+              >{{ data.detailsShowing ? 'Hide' : 'Show'}} Details</b-link>
+            </template>
+            <template slot="row-details" slot-scope="data">              
+              <p
+                v-if="data.item.years && data.item.years.length > 1"
+              >{{data.item.years[0]}}-{{data.item.years[data.item.years.length - 1]}}</p>
               <p v-else>{{data.item.years && data.item.years[0]}}</p>
+              {{data.item.months}}
             </template>
             <template slot="moviesCount" slot-scope="data">{{data.item.movieIds.length}}</template>
             <template slot="celebsCount" slot-scope="data">{{data.item.celebIds.length}}</template>
             <template
               slot="timestamp"
               slot-scope="data"
-            >{{data.item.algoliaUpdatedAt && new Date(data.item.algoliaUpdatedAt).toLocaleDateString() || '-'}}</template>
+            >{{data.item.algoliaUpdatedAt && new Date(data.item.algoliaUpdatedAt).toLocaleString() || '-'}}</template>
             <template slot="action" slot-scope="data">
               <p v-if="data.item.algoliaUpdatedAt" class="text-success">Updated!</p>
               <b-btn

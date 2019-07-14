@@ -8,8 +8,8 @@ import {
   saveOrUpdateCeleb,
   getRolesByCelebId,
 } from '@/api';
-import { uploadImage, deleteImage } from '@/support/storageUtils';
-import { searchMovies } from '@/support/searchUtils';
+import { uploadImage, deleteImage } from '@/support/firebaseUtils';
+import { searchMovies } from '@/support/algoliaUtils';
 
 @Component({
   components: {

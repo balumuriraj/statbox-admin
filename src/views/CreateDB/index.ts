@@ -1,5 +1,5 @@
 import { Component, Vue, Watch } from 'vue-property-decorator';
-import { getDBMetas, createDatabase } from '@/api';
+import { getDBMetas, createDatabase, createMovieFromUrl } from '@/api';
 import VueTagsInput from '@johmun/vue-tags-input';
 
 @Component({
@@ -9,6 +9,7 @@ import VueTagsInput from '@johmun/vue-tags-input';
 })
 export default class CreateDB extends Vue {
   public isBusy = false;
+  public url: string = '';
   public yearTag: string = '';
   public tag: string = '';
   public allTags = [
@@ -54,13 +55,21 @@ export default class CreateDB extends Vue {
   public metas: any[] = [];
   public fields = [
     'id',
-    'years',
-    'months',
+    'details',
     'moviesCount',
     'celebsCount',
     'type',
     'databaseUpdatedAt',
   ];
+
+  public async createMovie() {
+    this.isBusy = true;
+
+    await createMovieFromUrl(this.url);
+    this.metas = await getDBMetas();
+
+    this.isBusy = false;
+  }
 
   public async submit() {
     this.isBusy = true;

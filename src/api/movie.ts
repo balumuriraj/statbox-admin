@@ -1,64 +1,48 @@
-import axios from 'axios';
-import { baseUrl } from './config';
+import { request } from '.';
+
 
 export async function getMoviesCount(): Promise<number> {
-  const response = await axios({
+  const response = await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/movies/count`,
-    // headers: { Authorization: `${idToken}` },
+    url: `movies/count`,
   });
 
-  return response.data.count;
+  return response.count;
 }
 
 export async function getMovies(limit: number, skip: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/movies?limit=${limit}&skip=${skip}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `movies?limit=${limit}&skip=${skip}`,
   });
-
-  return response.data;
 }
 
 export async function getMovieById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'GET',
-    url: `${baseUrl}/api/rest/movie/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `movie/${id}`,
   });
-
-  return response.data;
 }
 
 export async function deleteMovieById(id: number): Promise<any> {
-  const response = await axios({
+  return await request({
     method: 'DELETE',
-    url: `${baseUrl}/api/rest/admin/movie/${id}`,
-    // headers: { Authorization: `${idToken}` },
+    url: `admin/movie/${id}`,
   });
-
-  return response.data;
 }
 
 export async function saveOrUpdateMovie(movie: any): Promise<any> {
   if (movie.id) {
-    const res = await axios({
+    return await request({
       method: 'PUT',
-      url: `${baseUrl}/api/rest/admin/movie/${movie.id}`,
+      url: `admin/movie/${movie.id}`,
       data: movie,
-      // headers: { Authorization: `${idToken}` },
     });
-
-    return res.data;
   }
 
-  const response = await axios({
+  return await request({
     method: 'POST',
-    url: `${baseUrl}/api/rest/admin/movie`,
+    url: `admin/movie`,
     data: movie,
-    // headers: { Authorization: `${idToken}` },
   });
-
-  return response.data;
 }
